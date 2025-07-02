@@ -11,8 +11,9 @@ import {
   Route,
 } from "react-router-dom";
 import NotFound from "../components/NotFound";
+import TeamRegister from "../modules/candidate/TeamRegister";
 const CandidateRegister = lazyLoad(
-  () => import("../modules/candidate/Register")
+  () => import("../modules/candidate/CandidateRegister")
 );
 const Login = lazyLoad(() => import("../modules/auth/Login"));
 const Player = lazyLoad(() => import("../modules/candidate/Player"));
@@ -26,9 +27,11 @@ const routes = createBrowserRouter(
         <Route path="/player" element={<Player />} />
         <Route path="*" element={<NotFound />} />
       </Route>
-      <Route element={<AuthLayout />}>
+      <Route element={<AuthLayout />} errorElement={<NotFound />}>
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<CandidateRegister />} />
+        <Route path="/candidate/register" element={<CandidateRegister />} />
+        <Route path="/team/register" element={<TeamRegister />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </>
   )
