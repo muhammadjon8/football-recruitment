@@ -1,0 +1,9 @@
+.parallax-section {
+    background-image: url('https://www.eisg.com/wp-content/uploads/basket-ball-player-1.jpg');
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+  }
+  
