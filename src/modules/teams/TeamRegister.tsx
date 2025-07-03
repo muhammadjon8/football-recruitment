@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { teamSchema, type TeamRegisterSchema } from "../../schemas/team.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import LocationSearch from "../../components/LocationSearch";
+import useRegisterTeam from "./hooks/use-register-team";
 
 const accountInformation: (keyof TeamRegisterSchema)[] = ["email", "password"];
 
@@ -24,6 +25,7 @@ const teamInformation: (keyof TeamRegisterSchema)[] = [
 
 const TeamRegister = () => {
   const navigate = useNavigate();
+  const registerTeam = useRegisterTeam();
 
   const methods = useForm<TeamRegisterSchema>({
     resolver: zodResolver(teamSchema),
@@ -43,8 +45,16 @@ const TeamRegister = () => {
     if (!isValid) return;
 
     const formData = methods.getValues();
-
+    registerTeam.mutate(formData, {
+      onSuccess: () => {
+        navigate("/team/pending");
+      },
+      onError: (err) => {
+        console.error("Failed to register team:", err);
+      },
+    });
     console.log("Team Registration Data:", formData);
+    
   };
 
   return (

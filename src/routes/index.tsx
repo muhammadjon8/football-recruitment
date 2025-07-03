@@ -11,12 +11,16 @@ import {
   Route,
 } from "react-router-dom";
 import NotFound from "../components/NotFound";
-import TeamRegister from "../modules/candidate/TeamRegister";
+
+const TeamRegister = lazyLoad(() => import("../modules/teams/TeamRegister"));
 const CandidateRegister = lazyLoad(
   () => import("../modules/candidate/CandidateRegister")
 );
 const Login = lazyLoad(() => import("../modules/auth/Login"));
 const Player = lazyLoad(() => import("../modules/candidate/Player"));
+const PendingApproval = lazyLoad(
+  () => import("../modules/teams/PendingApproval")
+);
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -31,6 +35,7 @@ const routes = createBrowserRouter(
         <Route path="/login" element={<Login />} />
         <Route path="/candidate/register" element={<CandidateRegister />} />
         <Route path="/team/register" element={<TeamRegister />} />
+        <Route path="/team/pending" element={<PendingApproval />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </>

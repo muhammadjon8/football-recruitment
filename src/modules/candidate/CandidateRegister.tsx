@@ -10,7 +10,6 @@ import {
   Box,
   Button,
   Card,
-  CardHeader,
   FormControl,
   FormHelperText,
   InputLabel,
@@ -21,11 +20,7 @@ import {
 } from "@mui/material";
 import {
   ArrowRight,
-  CheckCircle,
   CheckCircleOutline,
-  CheckCircleOutlineOutlined,
-  CheckCircleOutlineSharp,
-  CheckCircleOutlineTwoTone,
   Star,
   Upload,
 } from "@mui/icons-material";
