@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
-/* Note: The Serenity font URL might need to be updated with the correct CSS import URL */
 @import url("https://fonnts.com/serenity/");
 
 * {
