@@ -11,6 +11,7 @@ import {
   Route,
 } from "react-router-dom";
 import NotFound from "../components/NotFound";
+import Crown from "../crown/Crown";
 
 const TeamRegister = lazyLoad(() => import("../modules/teams/TeamRegister"));
 const CandidateRegister = lazyLoad(
@@ -38,8 +39,10 @@ const routes = createBrowserRouter(
         <Route path="/team/pending" element={<PendingApproval />} />
         <Route path="*" element={<NotFound />} />
       </Route>
+      <Route path="/crown" element={<Crown />} />
     </>
   )
 );
 
 export default routes;
+
