@@ -4,7 +4,7 @@ import {
   candidateSchema,
   type CandidateFormData,
 } from "../../schemas/candidate.schema";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import {
   Badge,
   Box,
@@ -363,6 +363,9 @@ const CandidateRegister = () => {
         <Button
           onClick={handleNext}
           className="flex-1 bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700"
+          sx={{
+            color: "#fff !important", // i did it this way because the default color is blue and text-white is not working
+          }}
         >
           Continue <ArrowRight className="ml-2 w-4 h-4" />
         </Button>
