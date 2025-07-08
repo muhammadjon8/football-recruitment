@@ -11,6 +11,11 @@ import {
   Route,
 } from "react-router-dom";
 import NotFound from "../components/NotFound";
+import CandidateDashboard from "../modules/candidate/CandidateDashboard";
+import EditCandidateProfile from "../modules/candidate/EditCandidateProfile";
+import JobSearch from "../modules/candidate/JobSearch";
+import CandidateInbox from "../modules/candidate/CandidateInbox";
+import AccountSettings from "../modules/candidate/AccountSettings";
 
 const TeamRegister = lazyLoad(() => import("../modules/teams/TeamRegister"));
 const CandidateRegister = lazyLoad(
@@ -29,6 +34,11 @@ const routes = createBrowserRouter(
         <Route path="/" element={<JobTicker />} />
         <Route path="/about" element={<About />} />
         <Route path="/player" element={<Player />} />
+        <Route path="/dashboard" element={<CandidateDashboard />} />
+        <Route path="/candidate/profile/edit" element={<EditCandidateProfile />} />
+        <Route path="/jobs" element={<JobSearch />} />
+        <Route path="/inbox" element={<CandidateInbox />} />
+        <Route path="/settings" element={<AccountSettings />} />
         <Route path="*" element={<NotFound />} />
       </Route>
       <Route element={<AuthLayout />} errorElement={<NotFound />}>
