@@ -6,23 +6,23 @@ const mockDialogs = [
   {
     id: 1,
     company: 'FC Digital United',
-    lastMessage: 'Спасибо за отклик! Мы свяжемся с вами.',
+    lastMessage: 'Thank you for your response! We will contact you soon.',
     date: '2024-06-01 14:20',
     unread: true,
     thread: [
-      { from: 'FC Digital United', text: 'Спасибо за отклик! Мы свяжемся с вами.', date: '2024-06-01 14:20', read: true },
-      { from: 'Вы', text: 'Здравствуйте! Откликнулся на вакансию маркетолога.', date: '2024-06-01 13:55', read: true },
+      { from: 'FC Digital United', text: 'Thank you for your response! We will contact you soon.', date: '2024-06-01 14:20', read: true },
+      { from: 'You', text: 'Hello! I have applied for the marketing position.', date: '2024-06-01 13:55', read: true },
     ],
   },
   {
     id: 2,
     company: 'FC Creative Stars',
-    lastMessage: 'Портфолио отличное! Когда сможете пройти интервью?',
+    lastMessage: 'Great portfolio! When can you do an interview?',
     date: '2024-05-29 10:05',
     unread: false,
     thread: [
-      { from: 'FC Creative Stars', text: 'Портфолио отличное! Когда сможете пройти интервью?', date: '2024-05-29 10:05', read: true },
-      { from: 'Вы', text: 'Добрый день! Отправил портфолио на вакансию дизайнера.', date: '2024-05-29 09:40', read: true },
+      { from: 'FC Creative Stars', text: 'Great portfolio! When can you do an interview?', date: '2024-05-29 10:05', read: true },
+      { from: 'You', text: 'Good afternoon! I have sent my portfolio for the designer position.', date: '2024-05-29 09:40', read: true },
     ],
   },
 ];
@@ -50,7 +50,7 @@ const CandidateInbox: React.FC = () => {
     if (!message.trim() || !dialog) return;
     const now = new Date();
     const dateStr = now.toISOString().slice(0, 16).replace('T', ' ');
-    const newMsg = { from: 'Вы', text: message, date: dateStr, read: true };
+    const newMsg = { from: 'You', text: message, date: dateStr, read: true };
     const updatedDialogs = dialogs.map((d: any) =>
       d.id === dialog.id
         ? {
@@ -70,7 +70,7 @@ const CandidateInbox: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#f9f9fb] py-6">
       <div className="max-w-3xl mx-auto px-4">
-        <h1 className="font-bold text-3xl mb-6">Сообщения</h1>
+        <h1 className="font-bold text-3xl mb-6">Messages</h1>
         <div className="flex flex-col md:flex-row gap-8">
           <div className="flex-1 min-w-[260px]">
             <div className="bg-white rounded-xl shadow-sm divide-y divide-gray-100">
@@ -90,19 +90,19 @@ const CandidateInbox: React.FC = () => {
                   </div>
                 </div>
               ))}
-              {dialogs.length === 0 && <div className="text-gray-500 p-8 text-center">Нет сообщений</div>}
+              {dialogs.length === 0 && <div className="text-gray-500 p-8 text-center">No messages</div>}
             </div>
           </div>
           <div className="flex-2 min-w-[260px] w-full">
             <div className="bg-white rounded-xl shadow-sm p-6 min-h-[220px] flex flex-col">
               {!dialog ? (
-                <div className="text-gray-500 text-center mt-10">Выберите диалог для просмотра истории сообщений</div>
+                <div className="text-gray-500 text-center mt-10">Select a conversation to view message history</div>
               ) : (
                 <>
                   <div className="font-semibold text-lg mb-3">{dialog.company}</div>
                   <div className="flex flex-col gap-3 flex-1 mb-4 overflow-y-auto max-h-[320px]">
                     {dialog.thread.map((msg: any, idx: number) => (
-                      <div key={idx} className={`max-w-[340px] rounded-lg px-4 py-3 ${msg.from === 'Вы' ? 'self-end bg-blue-50' : 'self-start bg-gray-100'}`}>
+                      <div key={idx} className={`max-w-[340px] rounded-lg px-4 py-3 ${msg.from === 'You' ? 'self-end bg-blue-50' : 'self-start bg-gray-100'}`}>
                         <div className="font-medium mb-1">{msg.from}</div>
                         <div>{msg.text}</div>
                         <div className="text-gray-400 text-xs mt-1">{msg.date}</div>
@@ -114,10 +114,10 @@ const CandidateInbox: React.FC = () => {
                       ref={inputRef}
                       value={message}
                       onChange={e => setMessage(e.target.value)}
-                      placeholder="Введите сообщение..."
+                      placeholder="Type a message..."
                       className="flex-1 rounded-lg border border-gray-200 px-3 py-2 text-base"
                     />
-                    <button type="submit" className="rounded-lg px-5 py-2 bg-blue-600 text-white font-semibold hover:bg-blue-700 transition">Отправить</button>
+                    <button type="submit" className="rounded-lg px-5 py-2 bg-blue-600 text-white font-semibold hover:bg-blue-700 transition">Send</button>
                   </form>
                 </>
               )}
