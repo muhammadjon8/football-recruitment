@@ -14,6 +14,7 @@ import { teamSchema, type TeamRegisterSchema } from "../../schemas/team.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import LocationSearch from "../../components/LocationSearch";
 import useRegisterTeam from "./hooks/use-register-team";
+import { useState } from "react";
 
 const accountInformation: (keyof TeamRegisterSchema)[] = ["email", "password"];
 
@@ -26,6 +27,8 @@ const teamInformation: (keyof TeamRegisterSchema)[] = [
 const TeamRegister = () => {
   const navigate = useNavigate();
   const registerTeam = useRegisterTeam();
+  const [isDragOver, setIsDragOver] = useState(false);
+  const [fileError, setFileError] = useState<string | null>(null);
 
   const methods = useForm<TeamRegisterSchema>({
     resolver: zodResolver(teamSchema),
@@ -217,29 +220,66 @@ const TeamRegister = () => {
                       render={({ field, fieldState }) => (
                         <div className="space-y-2">
                           <InputLabel htmlFor="logo">Upload Logo</InputLabel>
-                          <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-green-400 transition-colors cursor-pointer">
+                          <div
+                            className={`border-2 border-dashed border-gray-300 rounded-lg text-center transition-colors cursor-pointer ${isDragOver ? "border-green-400 bg-green-50" : "hover:border-green-400"}`}
+                            onDragOver={(e) => {
+                              e.preventDefault();
+                              setIsDragOver(true);
+                            }}
+                            onDragLeave={() => setIsDragOver(false)}
+                            onDrop={(e) => {
+                              e.preventDefault();
+                              setIsDragOver(false);
+                              const file = e.dataTransfer.files && e.dataTransfer.files[0];
+                              if (file) {
+                                const validTypes = ["image/png", "image/jpeg", "image/jpg"];
+                                const validExts = [".png", ".jpg", ".jpeg"];
+                                const fileName = file.name.toLowerCase();
+                                const isValid = validTypes.includes(file.type) || validExts.some(ext => fileName.endsWith(ext));
+                                if (!isValid) {
+                                  setFileError("Only PNG, JPG, JPEG files are allowed.");
+                                  return;
+                                }
+                                setFileError(null);
+                                field.onChange(file);
+                              }
+                            }}
+                          >
                             <input
                               type="file"
                               id="logo"
-                              accept=".pdf,.doc,.docx"
-                              onChange={(e) =>
-                                field.onChange(e.target.files?.[0] || null)
-                              }
+                              accept=".png,.jpg,.jpeg"
+                              onChange={(e) => {
+                                const file = e.target.files?.[0] || null;
+                                if (file) {
+                                  const validTypes = ["image/png", "image/jpeg", "image/jpg"];
+                                  const validExts = [".png", ".jpg", ".jpeg"];
+                                  const fileName = file.name.toLowerCase();
+                                  const isValid = validTypes.includes(file.type) || validExts.some(ext => fileName.endsWith(ext));
+                                  if (!isValid) {
+                                    setFileError("Only PNG, JPG, JPEG files are allowed.");
+                                    return;
+                                  }
+                                  setFileError(null);
+                                  field.onChange(file);
+                                } else {
+                                  setFileError(null);
+                                  field.onChange(null);
+                                }
+                              }}
                               className="hidden"
                             />
-                            <label htmlFor="logo" className="cursor-pointer">
+                            <label htmlFor="logo" className="cursor-pointer p-6 block">
                               <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
                               <p className="text-gray-600">
                                 {field.value?.name
                                   ? field.value.name
-                                  : "Click to upload your Logo (PDF, DOC, DOCX)"}
+                                  : "Click or drag and drop your Logo (PNG, JPG, JPEG)"}
                               </p>
                             </label>
                           </div>
-                          {fieldState.error && (
-                            <p className="text-red-500 text-sm mt-1">
-                              {fieldState.error.message}
-                            </p>
+                          {fileError && (
+                            <p className="text-red-500 text-sm mt-1">{fileError}</p>
                           )}
                         </div>
                       )}

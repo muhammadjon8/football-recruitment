@@ -4,7 +4,7 @@ import {
   candidateSchema,
   type CandidateFormData,
 } from "../../schemas/candidate.schema";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {
   Badge,
   Box,
@@ -48,6 +48,8 @@ const CandidateRegister = () => {
   const [selectedPlan, setSelectedPlan] = useState<"basic" | "pro" | null>(
     null
   );
+  const [isDragOver, setIsDragOver] = useState(false);
+  const [fileError, setFileError] = useState<string | null>(null);
 
   const methods = useForm<CandidateFormData>({
     resolver: zodResolver(candidateSchema),
@@ -289,27 +291,66 @@ const CandidateRegister = () => {
           render={({ field, fieldState }) => (
             <div className="space-y-2">
               <InputLabel htmlFor="cv">Upload CV</InputLabel>
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-green-400 transition-colors cursor-pointer">
+              <div
+                className={`border-2 border-dashed border-gray-300 rounded-lg text-center transition-colors cursor-pointer ${isDragOver ? "border-green-400 bg-green-50" : "hover:border-green-400"}`}
+                onDragOver={(e) => {
+                  e.preventDefault();
+                  setIsDragOver(true);
+                }}
+                onDragLeave={() => setIsDragOver(false)}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  setIsDragOver(false);
+                  const file = e.dataTransfer.files && e.dataTransfer.files[0];
+                  if (file) {
+                    const validTypes = ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
+                    const validExts = [".pdf", ".doc", ".docx"];
+                    const fileName = file.name.toLowerCase();
+                    const isValid = validTypes.includes(file.type) || validExts.some(ext => fileName.endsWith(ext));
+                    if (!isValid) {
+                      setFileError("Only PDF, DOC, DOCX files are allowed.");
+                      return;
+                    }
+                    setFileError(null);
+                    field.onChange(file);
+                  }
+                }}
+              >
                 <input
                   type="file"
                   id="cv"
                   accept=".pdf,.doc,.docx"
-                  onChange={(e) => field.onChange(e.target.files?.[0] || null)}
+                  onChange={(e) => {
+                    const file = e.target.files?.[0] || null;
+                    if (file) {
+                      const validTypes = ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
+                      const validExts = [".pdf", ".doc", ".docx"];
+                      const fileName = file.name.toLowerCase();
+                      const isValid = validTypes.includes(file.type) || validExts.some(ext => fileName.endsWith(ext));
+                      if (!isValid) {
+                        setFileError("Only PDF, DOC, DOCX files are allowed.");
+                        return;
+                      }
+                      setFileError(null);
+                      field.onChange(file);
+                    } else {
+                      setFileError(null);
+                      field.onChange(null);
+                    }
+                  }}
                   className="hidden"
                 />
-                <label htmlFor="cv" className="cursor-pointer">
+                <label htmlFor="cv" className="cursor-pointer p-6 block">
                   <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
                   <p className="text-gray-600">
                     {field.value?.name
                       ? field.value.name
-                      : "Click to upload your CV (PDF, DOC, DOCX)"}
+                      : "Click or drag and drop your CV (PDF, DOC, DOCX)"}
                   </p>
                 </label>
               </div>
-              {fieldState.error && (
-                <p className="text-red-500 text-sm mt-1">
-                  {fieldState.error.message}
-                </p>
+              {fileError && (
+                <p className="text-red-500 text-sm mt-1">{fileError}</p>
               )}
             </div>
           )}
