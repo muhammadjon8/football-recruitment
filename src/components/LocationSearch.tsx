@@ -4,12 +4,19 @@ import { Autocomplete, CircularProgress, TextField } from "@mui/material";
 
 export default function LocationSearch({
   onSelect,
+  value,
 }: {
   onSelect: (value: string) => void;
+  value?: string;
 }) {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState(value || "");
   const [options, setOptions] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+
+  // Обновлять inputValue при изменении value (controlled)
+  useEffect(() => {
+    if (typeof value === "string") setInputValue(value);
+  }, [value]);
 
   useEffect(() => {
     if (inputValue.length < 3) return;
@@ -51,7 +58,9 @@ export default function LocationSearch({
       freeSolo
       options={options}
       loading={loading}
+      inputValue={inputValue}
       onInputChange={(event, value) => setInputValue(value)}
+      value={inputValue}
       onChange={(event, value) => onSelect(value || "")}
       renderInput={(params) => (
         <TextField

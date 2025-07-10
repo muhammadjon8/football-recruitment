@@ -64,26 +64,28 @@ const JobSearch: React.FC = () => {
   }, [keyword, role, level, location, salary]);
 
   return (
-    <div className="min-h-screen bg-[#f9f9fb] py-6">
-      <div className="container max-w-5xl mx-auto px-4">
-        <h1 className="font-bold text-3xl mb-6">Job Search</h1>
-        <form className="flex flex-wrap gap-4 mb-6 bg-white rounded-xl p-6 shadow-sm" onSubmit={e => e.preventDefault()}>
-          <input value={keyword} onChange={e => setKeyword(e.target.value)} placeholder="Keyword" className="flex-1 min-w-[140px] rounded-lg border border-gray-200 px-3 py-2 text-base" />
-          <select value={role} onChange={e => setRole(e.target.value)} className="min-w-[120px] rounded-lg border border-gray-200 px-3 py-2 text-base">
-            <option value="">All professions</option>
-            {unique(mockJobs.map(j => j.title)).map(r => <option key={r} value={r}>{r}</option>)}
-          </select>
-          <select value={level} onChange={e => setLevel(e.target.value)} className="min-w-[110px] rounded-lg border border-gray-200 px-3 py-2 text-base">
-            <option value="">All levels</option>
-            {unique(mockJobs.map(j => j.level)).map(l => <option key={l} value={l}>{l}</option>)}
-          </select>
-          <select value={location} onChange={e => setLocation(e.target.value)} className="min-w-[110px] rounded-lg border border-gray-200 px-3 py-2 text-base">
-            <option value="">All cities</option>
-            {unique(mockJobs.map(j => j.location)).map(loc => <option key={loc} value={loc}>{loc}</option>)}
-          </select>
-          <input value={salary} onChange={e => setSalary(e.target.value.replace(/\D/g, ''))} placeholder="Salary from" className="min-w-[100px] rounded-lg border border-gray-200 px-3 py-2 text-base" />
-        </form>
-        <div className="flex flex-col gap-5">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-green-50 to-blue-100 py-8">
+      <div className="container mx-auto max-w-4xl px-4">
+        <h1 className="text-3xl font-bold text-blue-800 mb-6">Job Search</h1>
+        <section className="bg-white rounded-xl shadow-sm p-6 mb-6">
+          <form className="flex flex-wrap gap-4 mb-0 items-center" onSubmit={e => e.preventDefault()}>
+            <input value={keyword} onChange={e => setKeyword(e.target.value)} placeholder="Keyword" className="flex-1 min-w-[140px] rounded-lg border border-gray-200 px-3 py-2 text-base" />
+            <select value={role} onChange={e => setRole(e.target.value)} className="min-w-[120px] rounded-lg border border-gray-200 px-3 py-2 text-base">
+              <option value="">All professions</option>
+              {unique(mockJobs.map(j => j.title)).map(r => <option key={r} value={r}>{r}</option>)}
+            </select>
+            <select value={level} onChange={e => setLevel(e.target.value)} className="min-w-[110px] rounded-lg border border-gray-200 px-3 py-2 text-base">
+              <option value="">All levels</option>
+              {unique(mockJobs.map(j => j.level)).map(l => <option key={l} value={l}>{l}</option>)}
+            </select>
+            <select value={location} onChange={e => setLocation(e.target.value)} className="min-w-[110px] rounded-lg border border-gray-200 px-3 py-2 text-base">
+              <option value="">All cities</option>
+              {unique(mockJobs.map(j => j.location)).map(loc => <option key={loc} value={loc}>{loc}</option>)}
+            </select>
+            <input value={salary} onChange={e => setSalary(e.target.value.replace(/\D/g, ''))} placeholder="Salary from" className="min-w-[100px] rounded-lg border border-gray-200 px-3 py-2 text-base" />
+          </form>
+        </section>
+        <section className="flex flex-col gap-5">
           {filteredJobs.length === 0 ? (
             <div className="text-gray-500 bg-white rounded-xl p-10 text-center">No jobs found</div>
           ) : (
@@ -102,7 +104,7 @@ const JobSearch: React.FC = () => {
               </div>
             ))
           )}
-        </div>
+        </section>
       </div>
     </div>
   );

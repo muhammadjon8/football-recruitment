@@ -29,6 +29,8 @@ const TeamRegister = () => {
   const registerTeam = useRegisterTeam();
   const [isDragOver, setIsDragOver] = useState(false);
   const [fileError, setFileError] = useState<string | null>(null);
+  const [agree, setAgree] = useState(false);
+  const [agreeError, setAgreeError] = useState<string | null>(null);
 
   const methods = useForm<TeamRegisterSchema>({
     resolver: zodResolver(teamSchema),
@@ -43,10 +45,14 @@ const TeamRegister = () => {
     },
   });
 
-  const handleSubmit = () => {
-    const isValid = methods.trigger();
+  const handleSubmit = async () => {
+    setAgreeError(null);
+    const isValid = await methods.trigger();
     if (!isValid) return;
-
+    if (!agree) {
+      setAgreeError("You must agree to the Terms & Privacy Policy");
+      return;
+    }
     const formData = methods.getValues();
     registerTeam.mutate(formData, {
       onSuccess: () => {
@@ -57,7 +63,6 @@ const TeamRegister = () => {
       },
     });
     console.log("Team Registration Data:", formData);
-    
   };
 
   return (
@@ -78,7 +83,7 @@ const TeamRegister = () => {
 
         <Card className="shadow-xl border-0">
           <Box className="p-8">
-            <div className="space-y-6">
+            <form className="space-y-6" onSubmit={e => { e.preventDefault(); handleSubmit(); }}>
               {/* Account Information */}
               <div className="bg-blue-50 p-4 rounded-lg">
                 <h3 className="font-semibold text-blue-800 mb-2 flex items-center">
@@ -350,13 +355,39 @@ const TeamRegister = () => {
                 </div>
               </div>
 
+              {/* Terms & Privacy Agreement */}
+              <div className="flex items-center space-x-2 mt-4">
+                <input
+                  type="checkbox"
+                  id="agree"
+                  checked={agree}
+                  onChange={e => setAgree(e.target.checked)}
+                  className="w-4 h-4 border-gray-300 rounded"
+                />
+                <label htmlFor="agree" className="text-sm text-gray-700 select-none">
+                  I agree to the
+                  <a
+                    href="/terms"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 underline ml-1"
+                  >
+                    Terms & Privacy Policy
+                  </a>
+                </label>
+              </div>
+              {agreeError && (
+                <p className="text-red-500 text-sm mt-1">{agreeError}</p>
+              )}
+
               <button
-                onClick={handleSubmit}
-                className="w-full bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 py-3 text-white border rounded-md flex items-center justify-center"
+                type="submit"
+                className="w-full bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 py-3 text-white border rounded-md flex items-center justify-center mt-4"
+                disabled={registerTeam.isPending}
               >
-                Submit Registration <ArrowRight className="ml-2 w-4 h-4" />
+                {registerTeam.isPending ? "Submitting..." : <>Submit Registration <ArrowRight className="ml-2 w-4 h-4" /></>}
               </button>
-            </div>
+            </form>
           </Box>
         </Card>
       </div>

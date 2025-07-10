@@ -68,9 +68,9 @@ const CandidateInbox: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f9f9fb] py-6">
-      <div className="max-w-3xl mx-auto px-4">
-        <h1 className="font-bold text-3xl mb-6">Messages</h1>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-green-50 to-blue-100 py-8">
+      <div className="container mx-auto max-w-4xl px-4">
+        <h1 className="text-3xl font-bold text-blue-800 mb-6">Messages</h1>
         <div className="flex flex-col md:flex-row gap-8">
           <div className="flex-1 min-w-[260px]">
             <div className="bg-white rounded-xl shadow-sm divide-y divide-gray-100">

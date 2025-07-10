@@ -113,11 +113,19 @@ const CandidateDashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f9f9fb] py-6">
-      <div className="container max-w-5xl mx-auto px-4">
-        <h1 className="font-bold text-3xl mb-6">Candidate Dashboard</h1>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-green-50 to-blue-100 py-8">
+      <div className="container mx-auto max-w-4xl px-4">
+        <h1 className="text-3xl font-bold text-blue-800 mb-6">Candidate Dashboard</h1>
+        {/* Навигация */}
+        <div className="flex gap-4 mb-8">
+          <button className="px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition">Profile</button>
+          <button className="px-4 py-2 rounded-lg bg-green-600 text-white font-semibold hover:bg-green-700 transition">Applications</button>
+          <button className="px-4 py-2 rounded-lg bg-amber-500 text-white font-semibold hover:bg-amber-600 transition">Job Search</button>
+          <button className="px-4 py-2 rounded-lg bg-gray-600 text-white font-semibold hover:bg-gray-700 transition">Messages</button>
+          <button className="px-4 py-2 rounded-lg bg-purple-600 text-white font-semibold hover:bg-purple-700 transition">Settings</button>
+        </div>
         {/* Candidate Profile Section */}
-        <section className="bg-white rounded-xl p-6 mb-6 shadow-sm">
+        <section className="bg-white rounded-xl shadow-sm p-6 mb-6">
           <h2 className="text-xl font-semibold mb-3">Candidate Profile</h2>
           <div className="flex flex-wrap gap-6 items-center">
             <div className="space-y-1">
@@ -133,13 +141,11 @@ const CandidateDashboard: React.FC = () => {
           </div>
         </section>
         {/* My Applications Section */}
-        <section className="bg-white rounded-xl p-6 mb-6 shadow-sm">
+        <section className="bg-white rounded-xl shadow-sm p-6 mb-6">
           <h2 className="text-xl font-semibold mb-3">My Applications</h2>
-          {/* TEST FORM (delete in prod) */}
           <AddApplicationForm onAdd={handleAddApplication} />
-          {/* END TEST FORM */}
           {applications.length === 0 ? (
-            <div className="text-gray-500">You have not applied to any jobs yet.</div>
+            <div className="text-gray-500 mb-4">You have not applied to any jobs yet.</div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full border-collapse">
@@ -170,12 +176,12 @@ const CandidateDashboard: React.FC = () => {
           )}
         </section>
         {/* Job Search Section */}
-        <section className="bg-white rounded-xl p-6 mb-6 shadow-sm">
+        <section className="bg-white rounded-xl shadow-sm p-6 mb-6">
           <h2 className="text-xl font-semibold mb-3">Job Search</h2>
-          <button className="rounded-lg px-4 py-2 bg-blue-600 text-white font-semibold mt-2 hover:bg-blue-700 transition" onClick={() => window.location.href='/jobs'}>Go to Job Search</button>
+          <button className="rounded-lg px-4 py-2 bg-amber-500 text-black font-semibold mt-2 hover:bg-amber-600 transition" onClick={() => window.location.href='/jobs'}>Go to Job Search</button>
         </section>
         {/* Messages Section */}
-        <section className="bg-white rounded-xl p-6 mb-6 shadow-sm">
+        <section className="bg-white rounded-xl shadow-sm p-6 mb-6">
           <h2 className="text-xl font-semibold mb-3">Messages</h2>
           <ul className="list-none p-0 m-0">
             <li className="py-3 border-b border-gray-100 flex justify-between items-center">
@@ -187,14 +193,14 @@ const CandidateDashboard: React.FC = () => {
               <span className="text-gray-500 text-sm">2024-05-29</span>
             </li>
           </ul>
-          <button className="rounded-lg px-4 py-2 bg-blue-600 text-white font-semibold mt-2 hover:bg-blue-700 transition" onClick={() => window.location.href='/inbox'}>Go to Inbox</button>
+          <button className="rounded-lg px-4 py-2 bg-gray-600 text-white font-semibold mt-2 hover:bg-gray-700 transition" onClick={() => window.location.href='/inbox'}>Go to Inbox</button>
         </section>
         {/* Account Settings Section */}
-        <section className="bg-white rounded-xl p-6 mb-6 shadow-sm">
+        <section className="bg-white rounded-xl shadow-sm p-6 mb-6">
           <h2 className="text-xl font-semibold mb-3">Account Settings</h2>
           <ul className="list-none p-0 m-0 text-base">
             <li className="mb-2"><b>Subscription:</b> {profile.subscription}</li>
-            <li className="mb-2"><button className="rounded-lg px-4 py-2 bg-blue-600 text-white font-semibold mt-2 hover:bg-blue-700 transition" onClick={() => window.location.href='/settings'}>Go to Settings</button></li>
+            <li className="mb-2"><button className="rounded-lg px-4 py-2 bg-purple-600 text-white font-semibold mt-2 hover:bg-purple-700 transition" onClick={() => window.location.href='/settings'}>Go to Settings</button></li>
           </ul>
         </section>
       </div>
