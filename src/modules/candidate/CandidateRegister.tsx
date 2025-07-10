@@ -26,6 +26,7 @@ import {
 } from "@mui/icons-material";
 import useRegisterCandidate from "./hooks/use-candidate";
 import { useNavigate } from "react-router-dom";
+import { AuthenticationService } from '../../api';
 
 const step1Fields: (keyof CandidateFormData)[] = [
   "firstName",
@@ -50,6 +51,8 @@ const CandidateRegister = () => {
   );
   const [isDragOver, setIsDragOver] = useState(false);
   const [fileError, setFileError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const methods = useForm<CandidateFormData>({
     resolver: zodResolver(candidateSchema),
@@ -83,6 +86,20 @@ const CandidateRegister = () => {
   const handleBack = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
+    }
+  };
+
+  const handleRegister = async (formData: any) => {
+    setLoading(true);
+    setError('');
+    try {
+      await AuthenticationService.registerCandidateV1AuthRegisterCandidatePost(formData);
+      // После успешной регистрации перенаправляем на логин
+      navigate('/login');
+    } catch (error: any) {
+      setError(error?.body?.detail || 'Ошибка регистрации');
+    } finally {
+      setLoading(false);
     }
   };
 

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthenticationService } from '../../api';
+import { OpenAPI } from '../../api';
 
 const TEAM_PROFILE_KEY = "team_profile";
 
@@ -9,6 +11,24 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // Добавим функцию для логина кандидата
+  const handleLogin = async (email: string, password: string) => {
+    try {
+      const response = await AuthenticationService.loginV1AuthLoginPost({
+        username: email,
+        password: password,
+      });
+      // Сохраняем токен в localStorage
+      localStorage.setItem('access_token', response.access_token);
+      // Настраиваем OpenAPI на автоматическую подстановку токена
+      OpenAPI.TOKEN = async () => localStorage.getItem('access_token') || '';
+      // TODO: редирект или обновление состояния авторизации
+    } catch (error: any) {
+      // TODO: обработка ошибок (например, показать сообщение пользователю)
+      console.error('Ошибка логина:', error);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
