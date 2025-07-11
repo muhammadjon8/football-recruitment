@@ -9,7 +9,7 @@ const navLinks = [
 
 const authLinks = [
   { to: '/login', label: 'Sign In' },
-  { to: '/candidate/register', label: 'Sign Up' },
+  { to: '/register', label: 'Sign Up' },
 ];
 
 const Navbar: React.FC = () => {

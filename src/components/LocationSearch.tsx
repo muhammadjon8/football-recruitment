@@ -5,9 +5,11 @@ import { Autocomplete, CircularProgress, TextField } from "@mui/material";
 export default function LocationSearch({
   onSelect,
   value,
+  inputSx,
 }: {
   onSelect: (value: string) => void;
   value?: string;
+  inputSx?: object;
 }) {
   const [inputValue, setInputValue] = useState(value || "");
   const [options, setOptions] = useState<string[]>([]);
@@ -76,6 +78,7 @@ export default function LocationSearch({
               </>
             ),
           }}
+          sx={inputSx}
         />
       )}
     />

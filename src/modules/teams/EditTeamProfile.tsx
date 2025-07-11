@@ -43,33 +43,47 @@ const EditTeamProfile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f9f9fb] py-6">
-      <div className="max-w-xl mx-auto bg-white rounded-xl shadow-sm p-8">
-        <h2 className="font-bold text-2xl mb-6 text-blue-700 text-center">Edit Team Profile</h2>
-        <form className="space-y-5" onSubmit={handleSubmit}>
+    <div className="min-h-screen bg-black pt-16 flex items-center justify-center">
+      <div className="max-w-xl w-full bg-white rounded-2xl shadow-xl p-10">
+        <h2 className="font-extrabold text-3xl mb-8 text-black text-center uppercase">
+          Edit <span className="text-yellow-300">Team Profile</span>
+        </h2>
+        <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
-            <label className="block text-sm font-medium mb-1">Club Name</label>
-            <input {...methods.register("teamName")} className="w-full rounded-lg border border-gray-200 px-3 py-2 text-base mt-1" />
+            <label className="block text-black font-semibold mb-1">Club Name</label>
+            <input {...methods.register("teamName")}
+              className="w-full rounded-lg border border-black px-3 py-2 text-base mt-1 bg-white placeholder-gray-400"
+              placeholder="Enter club name"
+            />
             {methods.formState.errors.teamName && <p className="text-red-500 text-sm">{methods.formState.errors.teamName.message}</p>}
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Email</label>
-            <input {...methods.register("email")} className="w-full rounded-lg border border-gray-200 px-3 py-2 text-base mt-1" />
+            <label className="block text-black font-semibold mb-1">Email</label>
+            <input {...methods.register("email")}
+              className="w-full rounded-lg border border-black px-3 py-2 text-base mt-1 bg-white placeholder-gray-400"
+              placeholder="Enter email"
+            />
             {methods.formState.errors.email && <p className="text-red-500 text-sm">{methods.formState.errors.email.message}</p>}
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Website</label>
-            <input {...methods.register("website")} className="w-full rounded-lg border border-gray-200 px-3 py-2 text-base mt-1" />
+            <label className="block text-black font-semibold mb-1">Website</label>
+            <input {...methods.register("website")}
+              className="w-full rounded-lg border border-black px-3 py-2 text-base mt-1 bg-white placeholder-gray-400"
+              placeholder="Enter website"
+            />
             {methods.formState.errors.website && <p className="text-red-500 text-sm">{methods.formState.errors.website.message}</p>}
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Location</label>
+            <label className="block text-black font-semibold mb-1">Location</label>
             <LocationSearch value={methods.watch('location')} onSelect={value => methods.setValue("location", value)} />
             {methods.formState.errors.location && <p className="text-red-500 text-sm">{methods.formState.errors.location.message}</p>}
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Description</label>
-            <textarea {...methods.register("description")} className="w-full rounded-lg border border-gray-200 px-3 py-2 min-h-[60px] text-base mt-1" />
+            <label className="block text-black font-semibold mb-1">Description</label>
+            <textarea {...methods.register("description")}
+              className="w-full rounded-lg border border-black px-3 py-2 min-h-[60px] text-base mt-1 bg-white placeholder-gray-400"
+              placeholder="Enter description"
+            />
             {methods.formState.errors.description && <p className="text-red-500 text-sm">{methods.formState.errors.description.message}</p>}
           </div>
           <div>
@@ -78,9 +92,9 @@ const EditTeamProfile = () => {
               control={methods.control}
               render={({ field }) => (
                 <div className="space-y-2">
-                  <label className="block text-sm font-medium mb-1">Logo</label>
+                  <label className="block text-black font-semibold mb-1">Logo</label>
                   <div
-                    className={`border-2 border-dashed border-gray-300 rounded-lg text-center transition-colors cursor-pointer ${isDragOver ? "border-green-400 bg-green-50" : "hover:border-green-400"}`}
+                    className={`border-2 border-dashed border-black rounded-lg text-center transition-colors cursor-pointer ${isDragOver ? "border-yellow-400 bg-yellow-50" : "hover:border-yellow-400"}`}
                     onDragOver={e => { e.preventDefault(); setIsDragOver(true); }}
                     onDragLeave={() => setIsDragOver(false)}
                     onDrop={e => {
@@ -134,8 +148,8 @@ const EditTeamProfile = () => {
             />
           </div>
           <div className="flex justify-end gap-2 pt-2">
-            <button type="button" className="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300" onClick={() => navigate('/team/dashboard')}>Cancel</button>
-            <button type="submit" className="px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700">Save</button>
+            <button type="button" className="px-6 py-3 rounded-lg bg-white border border-black text-black font-bold hover:bg-yellow-50 transition" onClick={() => navigate('/team/dashboard')}>Cancel</button>
+            <button type="submit" className="px-6 py-3 rounded-lg bg-yellow-300 text-black font-bold hover:bg-yellow-400 transition">Save</button>
           </div>
         </form>
       </div>

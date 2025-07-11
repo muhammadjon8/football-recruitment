@@ -154,19 +154,19 @@ const CandidateDashboard: React.FC = () => {
         <h2 className="text-3xl font-bold text-yellow-300 mb-8 uppercase">Candidate Profile</h2>
         <div className="flex flex-wrap gap-10 items-center">
           <div className="space-y-2 text-white text-lg">
-            <div><b>Name:</b> {profile.name}</div>
-            <div><b>Profession:</b> {profile.role}</div>
-            <div><b>Experience:</b> {profile.experience}</div>
-            <div><b>Location:</b> {profile.location}</div>
-            <div><b>Qualifications:</b> {profile.qualifications}</div>
-            <div><b>Subscription:</b> {profile.subscription}</div>
+              <div><b>Name:</b> {profile.name}</div>
+              <div><b>Profession:</b> {profile.role}</div>
+              <div><b>Experience:</b> {profile.experience}</div>
+              <div><b>Location:</b> {profile.location}</div>
+              <div><b>Qualifications:</b> {profile.qualifications}</div>
+              <div><b>Subscription:</b> {profile.subscription}</div>
             <div><b>CV:</b> <a href="#" className="text-yellow-300 underline">{profile.cv}</a></div>
-          </div>
+            </div>
           <button className="rounded px-6 py-3 bg-yellow-300 text-black font-bold hover:bg-yellow-400 transition" onClick={() => navigate('/candidate/profile/edit')}>
             Edit Profile
           </button>
-        </div>
-      </section>
+          </div>
+        </section>
 
       {/* Divider */}
       <div className="w-full h-6 bg-yellow-300" style={{ transform: 'skewY(-3deg)' }}></div>
@@ -174,22 +174,22 @@ const CandidateDashboard: React.FC = () => {
       {/* Applications Section */}
       <section className="bg-yellow-300 py-12 px-8">
         <h2 className="text-3xl font-bold text-black mb-8 uppercase">My Applications</h2>
-        <AddApplicationForm onAdd={handleAddApplication} />
-        {applications.length === 0 ? (
+          <AddApplicationForm onAdd={handleAddApplication} />
+          {applications.length === 0 ? (
           <div className="text-gray-700 mb-4">You have not applied to any jobs yet.</div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse">
-              <thead>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse">
+                <thead>
                 <tr className="bg-black">
                   <th className="p-3 text-yellow-300 text-left">Position</th>
                   <th className="p-3 text-yellow-300 text-left">Company</th>
                   <th className="p-3 text-yellow-300 text-left">Date</th>
                   <th className="p-3 text-yellow-300 text-left">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {applications.map((app: Application) => (
+                  </tr>
+                </thead>
+                <tbody>
+                  {applications.map((app: Application) => (
                   <tr key={app.id} className="bg-white border-b border-yellow-200">
                     <td className="p-3 text-black font-semibold">{app.position}</td>
                     <td className="p-3 text-black">{app.company}</td>
@@ -198,19 +198,19 @@ const CandidateDashboard: React.FC = () => {
                       {app.status === 'Pending' && <span className="text-yellow-500 font-bold">Pending</span>}
                       {app.status === 'Accepted' && <span className="text-green-600 font-bold">Accepted</span>}
                       {app.status === 'Declined' && <span className="text-red-600 font-bold">Declined</span>}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </section>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </section>
 
       {/* Divider */}
       <div className="w-full h-6 bg-black" style={{ transform: 'skewY(3deg)' }}></div>
 
-      {/* Job Search Section */}
+        {/* Job Search Section */}
       <section className="bg-black py-12 px-8">
         <h2 className="text-3xl font-bold text-yellow-300 mb-8 uppercase">Featured Jobs</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -224,7 +224,7 @@ const CandidateDashboard: React.FC = () => {
           </div>
           {/* ...other cards */}
         </div>
-      </section>
+        </section>
     </div>
   );
 };
