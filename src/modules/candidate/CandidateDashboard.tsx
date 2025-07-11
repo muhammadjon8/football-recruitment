@@ -76,14 +76,14 @@ const AddApplicationForm: React.FC<{ onAdd: (app: Application) => void }> = ({ o
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-wrap gap-2 mb-4 items-center">
-      <input value={position} onChange={e => setPosition(e.target.value)} placeholder="Position" className="rounded-lg border border-gray-200 px-3 py-2 text-base" />
-      <input value={company} onChange={e => setCompany(e.target.value)} placeholder="Company" className="rounded-lg border border-gray-200 px-3 py-2 text-base" />
-      <select value={status} onChange={e => setStatus(e.target.value as any)} className="rounded-lg border border-gray-200 px-3 py-2 text-base">
+      <input value={position} onChange={e => setPosition(e.target.value)} placeholder="Position" className="rounded border border-black px-3 py-2 text-base" />
+      <input value={company} onChange={e => setCompany(e.target.value)} placeholder="Company" className="rounded border border-black px-3 py-2 text-base" />
+      <select value={status} onChange={e => setStatus(e.target.value as any)} className="rounded border border-black px-3 py-2 text-base">
         <option value="Pending">Pending</option>
         <option value="Accepted">Accepted</option>
         <option value="Declined">Declined</option>
       </select>
-      <button type="submit" className="rounded-lg px-5 py-2 bg-blue-600 text-white font-semibold shadow-md hover:scale-105 transition">Add Application</button>
+      <button type="submit" className="rounded px-5 py-2 bg-yellow-300 text-black font-bold shadow hover:bg-yellow-400 transition">Add Application</button>
     </form>
   );
 };
@@ -99,13 +99,6 @@ const CandidateDashboard: React.FC = () => {
     setApplications(getApplications());
   }, []);
 
-//   useEffect(() => {
-//     const accessToken = getCookie('accessToken');
-//     if (!accessToken) {
-//       navigate('/login');
-//     }
-//   }, [navigate]);
-
   const handleAddApplication = (app: Application) => {
     const updated = [app, ...applications];
     setApplications(updated);
@@ -113,97 +106,125 @@ const CandidateDashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-green-50 to-blue-100 py-8">
-      <div className="container mx-auto max-w-4xl px-4">
-        <h1 className="text-3xl font-bold text-blue-800 mb-6">Candidate Dashboard</h1>
-        {/* Навигация */}
-        <div className="flex gap-4 mb-8">
-          <button className="px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition">Profile</button>
-          <button className="px-4 py-2 rounded-lg bg-green-600 text-white font-semibold hover:bg-green-700 transition">Applications</button>
-          <button className="px-4 py-2 rounded-lg bg-amber-500 text-white font-semibold hover:bg-amber-600 transition">Job Search</button>
-          <button className="px-4 py-2 rounded-lg bg-gray-600 text-white font-semibold hover:bg-gray-700 transition">Messages</button>
-          <button className="px-4 py-2 rounded-lg bg-purple-600 text-white font-semibold hover:bg-purple-700 transition">Settings</button>
+    <div className="min-h-screen bg-black pt-16">
+      {/* Hero Section */}
+      <section className="relative bg-cover bg-center h-72 flex items-center" style={{ backgroundImage: "url('/assets/football.svg')" }}>
+        <div className="absolute inset-0 bg-black bg-opacity-70"></div>
+        <div className="relative z-10 px-8">
+          <h1 className="text-4xl md:text-6xl font-extrabold uppercase text-white leading-tight">
+            Unlock<br />
+            <span className="text-yellow-300">Your Potential</span><br />
+            in Sport
+          </h1>
+          <p className="mt-4 text-lg text-white max-w-xl">
+            Welcome to your candidate dashboard. Here you can track your applications, update your profile, and find the best jobs in sport.
+          </p>
+          <button className="mt-6 bg-yellow-300 text-black font-bold px-8 py-3 rounded hover:bg-yellow-400 transition" onClick={() => navigate('/candidate/profile/edit')}>
+            Update Profile
+          </button>
         </div>
-        {/* Candidate Profile Section */}
-        <section className="bg-white rounded-xl shadow-sm p-6 mb-6">
-          <h2 className="text-xl font-semibold mb-3">Candidate Profile</h2>
-          <div className="flex flex-wrap gap-6 items-center">
-            <div className="space-y-1">
-              <div><b>Name:</b> {profile.name}</div>
-              <div><b>Profession:</b> {profile.role}</div>
-              <div><b>Experience:</b> {profile.experience}</div>
-              <div><b>Location:</b> {profile.location}</div>
-              <div><b>Qualifications:</b> {profile.qualifications}</div>
-              <div><b>Subscription:</b> {profile.subscription}</div>
-              <div><b>CV:</b> <a href="#" className="text-blue-600 underline">{profile.cv}</a></div>
-            </div>
-            <button className="rounded-lg px-4 py-2 bg-blue-600 text-white font-semibold mt-4 hover:bg-blue-700 transition" onClick={() => window.location.href='/candidate/profile/edit'}>Edit Profile</button>
+      </section>
+      {/* Divider */}
+      <div className="w-full h-6 bg-yellow-300" style={{ transform: 'skewY(-3deg)' }}></div>
+
+      {/* Stats Section */}
+      <section className="bg-yellow-300 py-12 px-8">
+        <h2 className="text-3xl font-bold text-black mb-8 uppercase">Your Stats</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="bg-white rounded shadow p-8 text-center">
+            <div className="text-4xl font-extrabold text-black">{applications.length}</div>
+            <div className="text-lg text-gray-700 mt-2">Applications</div>
           </div>
-        </section>
-        {/* My Applications Section */}
-        <section className="bg-white rounded-xl shadow-sm p-6 mb-6">
-          <h2 className="text-xl font-semibold mb-3">My Applications</h2>
-          <AddApplicationForm onAdd={handleAddApplication} />
-          {applications.length === 0 ? (
-            <div className="text-gray-500 mb-4">You have not applied to any jobs yet.</div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full border-collapse">
-                <thead>
-                  <tr className="bg-gray-100">
-                    <th className="p-2 rounded-lg text-left">Position</th>
-                    <th className="p-2 rounded-lg text-left">Company</th>
-                    <th className="p-2 rounded-lg text-left">Date</th>
-                    <th className="p-2 rounded-lg text-left">Status</th>
+          <div className="bg-white rounded shadow p-8 text-center">
+            <div className="text-4xl font-extrabold text-black">2</div>
+            <div className="text-lg text-gray-700 mt-2">Interviews</div>
+          </div>
+          <div className="bg-white rounded shadow p-8 text-center">
+            <div className="text-4xl font-extrabold text-black">1</div>
+            <div className="text-lg text-gray-700 mt-2">Offers</div>
+          </div>
+        </div>
+      </section>
+
+      {/* Divider */}
+      <div className="w-full h-6 bg-black" style={{ transform: 'skewY(3deg)' }}></div>
+
+      {/* Profile Section */}
+      <section className="bg-black py-12 px-8">
+        <h2 className="text-3xl font-bold text-yellow-300 mb-8 uppercase">Candidate Profile</h2>
+        <div className="flex flex-wrap gap-10 items-center">
+          <div className="space-y-2 text-white text-lg">
+            <div><b>Name:</b> {profile.name}</div>
+            <div><b>Profession:</b> {profile.role}</div>
+            <div><b>Experience:</b> {profile.experience}</div>
+            <div><b>Location:</b> {profile.location}</div>
+            <div><b>Qualifications:</b> {profile.qualifications}</div>
+            <div><b>Subscription:</b> {profile.subscription}</div>
+            <div><b>CV:</b> <a href="#" className="text-yellow-300 underline">{profile.cv}</a></div>
+          </div>
+          <button className="rounded px-6 py-3 bg-yellow-300 text-black font-bold hover:bg-yellow-400 transition" onClick={() => navigate('/candidate/profile/edit')}>
+            Edit Profile
+          </button>
+        </div>
+      </section>
+
+      {/* Divider */}
+      <div className="w-full h-6 bg-yellow-300" style={{ transform: 'skewY(-3deg)' }}></div>
+
+      {/* Applications Section */}
+      <section className="bg-yellow-300 py-12 px-8">
+        <h2 className="text-3xl font-bold text-black mb-8 uppercase">My Applications</h2>
+        <AddApplicationForm onAdd={handleAddApplication} />
+        {applications.length === 0 ? (
+          <div className="text-gray-700 mb-4">You have not applied to any jobs yet.</div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="bg-black">
+                  <th className="p-3 text-yellow-300 text-left">Position</th>
+                  <th className="p-3 text-yellow-300 text-left">Company</th>
+                  <th className="p-3 text-yellow-300 text-left">Date</th>
+                  <th className="p-3 text-yellow-300 text-left">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {applications.map((app: Application) => (
+                  <tr key={app.id} className="bg-white border-b border-yellow-200">
+                    <td className="p-3 text-black font-semibold">{app.position}</td>
+                    <td className="p-3 text-black">{app.company}</td>
+                    <td className="p-3 text-black">{app.date}</td>
+                    <td className="p-3">
+                      {app.status === 'Pending' && <span className="text-yellow-500 font-bold">Pending</span>}
+                      {app.status === 'Accepted' && <span className="text-green-600 font-bold">Accepted</span>}
+                      {app.status === 'Declined' && <span className="text-red-600 font-bold">Declined</span>}
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {applications.map((app: Application) => (
-                    <tr key={app.id}>
-                      <td className="p-2">{app.position}</td>
-                      <td className="p-2">{app.company}</td>
-                      <td className="p-2">{app.date}</td>
-                      <td className="p-2">
-                        {app.status === 'Pending' && <span className="text-orange-400 font-semibold">Pending</span>}
-                        {app.status === 'Accepted' && <span className="text-green-500 font-semibold">Accepted</span>}
-                        {app.status === 'Declined' && <span className="text-red-500 font-semibold">Declined</span>}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </section>
-        {/* Job Search Section */}
-        <section className="bg-white rounded-xl shadow-sm p-6 mb-6">
-          <h2 className="text-xl font-semibold mb-3">Job Search</h2>
-          <button className="rounded-lg px-4 py-2 bg-amber-500 text-black font-semibold mt-2 hover:bg-amber-600 transition" onClick={() => window.location.href='/jobs'}>Go to Job Search</button>
-        </section>
-        {/* Messages Section */}
-        <section className="bg-white rounded-xl shadow-sm p-6 mb-6">
-          <h2 className="text-xl font-semibold mb-3">Messages</h2>
-          <ul className="list-none p-0 m-0">
-            <li className="py-3 border-b border-gray-100 flex justify-between items-center">
-              <span><b>FC Digital United</b>: "Thank you for your response! We will contact you soon."</span>
-              <span className="text-gray-500 text-sm">2024-06-01</span>
-            </li>
-            <li className="py-3 border-b border-gray-100 flex justify-between items-center">
-              <span><b>FC Creative Stars</b>: "Great portfolio! When can you do an interview?"</span>
-              <span className="text-gray-500 text-sm">2024-05-29</span>
-            </li>
-          </ul>
-          <button className="rounded-lg px-4 py-2 bg-gray-600 text-white font-semibold mt-2 hover:bg-gray-700 transition" onClick={() => window.location.href='/inbox'}>Go to Inbox</button>
-        </section>
-        {/* Account Settings Section */}
-        <section className="bg-white rounded-xl shadow-sm p-6 mb-6">
-          <h2 className="text-xl font-semibold mb-3">Account Settings</h2>
-          <ul className="list-none p-0 m-0 text-base">
-            <li className="mb-2"><b>Subscription:</b> {profile.subscription}</li>
-            <li className="mb-2"><button className="rounded-lg px-4 py-2 bg-purple-600 text-white font-semibold mt-2 hover:bg-purple-700 transition" onClick={() => window.location.href='/settings'}>Go to Settings</button></li>
-          </ul>
-        </section>
-      </div>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
+
+      {/* Divider */}
+      <div className="w-full h-6 bg-black" style={{ transform: 'skewY(3deg)' }}></div>
+
+      {/* Job Search Section */}
+      <section className="bg-black py-12 px-8">
+        <h2 className="text-3xl font-bold text-yellow-300 mb-8 uppercase">Featured Jobs</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Example card */}
+          <div className="bg-white rounded shadow p-8">
+            <h3 className="text-xl font-bold text-black">Business Development Manager</h3>
+            <p className="text-gray-700 mt-2">Football Club "Example"</p>
+            <button className="mt-4 bg-yellow-300 text-black font-bold px-6 py-2 rounded hover:bg-yellow-400 transition" onClick={() => navigate('/jobs')}>
+              More Details
+            </button>
+          </div>
+          {/* ...other cards */}
+        </div>
+      </section>
     </div>
   );
 };
