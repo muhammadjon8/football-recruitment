@@ -1,8 +1,10 @@
-import { RouterProvider } from "react-router-dom";
-import routes from "./routes";
+import "./App.css";
+import SearchSelect from "./SearchSelect";
 
-function App() {
-  return <RouterProvider router={routes} />;
+export default function App() {
+  return (
+    <>
+      <SearchSelect />
+    </>
+  );
 }
-
-export default App;
